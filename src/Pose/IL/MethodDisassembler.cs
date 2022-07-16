@@ -24,7 +24,7 @@ namespace Pose.IL
         {
             var methodDependencies = GetILInstructions()
                 .Where(i => (i.Operand as MethodInfo) != null || (i.Operand as ConstructorInfo) != null)
-                .Select(i => (i.Operand as MethodBase));
+                .Select(i => i.Operand as MethodBase);
 
             return methodDependencies.ToList();
         }

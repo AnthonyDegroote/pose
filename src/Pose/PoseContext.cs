@@ -25,7 +25,7 @@ namespace Pose
 
             Type delegateType = typeof(Action<>).MakeGenericType(entryPoint.Target.GetType());
             MethodRewriter rewriter = MethodRewriter.CreateRewriter(entryPoint.Method, false);
-            ((MethodInfo)(rewriter.Rewrite())).CreateDelegate(delegateType).DynamicInvoke(entryPoint.Target);
+            ((MethodInfo)rewriter.Rewrite()).CreateDelegate(delegateType).DynamicInvoke(entryPoint.Target);
         }
     }
 }

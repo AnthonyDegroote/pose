@@ -6,18 +6,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Pose.Tests
 {
     [TestClass]
-    public class EndToEnd
+    public class EndToEndTest
     {
         [TestMethod]
-        public void Test()
+        public void TestConsoleStaticMethod()
         {
             TextWriter writer = Console.Out;
             // Arrange
             Shim consoleShim = Shim
                 .Replace(() => Console.WriteLine(Is.A<string>()))
                 .With(delegate (string s) { Console.WriteLine("Hijacked: {0}", s); });
+            
             // Act
-
             PoseContext.Isolate(() =>
             {
                 Console.WriteLine("Hello world");

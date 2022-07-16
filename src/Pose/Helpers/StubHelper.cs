@@ -95,7 +95,7 @@ namespace Pose.Helpers
 
             if (type.IsSubclassOf(shim.Type))
             {
-                if ((shim.Original.IsAbstract || !shim.Original.IsVirtual)
+                if (shim.Original.IsAbstract || !shim.Original.IsVirtual
                         || (shim.Original.IsVirtual && !method.IsOverride()))
                 {
                     return $"{shim.Original}" == $"{method}";

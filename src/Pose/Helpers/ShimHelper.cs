@@ -92,13 +92,13 @@ namespace Pose.Helpers
                         ConstantExpression constantExpression = memberExpression.Expression as ConstantExpression;
                         if (memberExpression.Member.MemberType == MemberTypes.Field)
                         {
-                            FieldInfo fieldInfo = (memberExpression.Member as FieldInfo);
+                            FieldInfo fieldInfo = memberExpression.Member as FieldInfo;
                             var obj = fieldInfo.IsStatic ? null : constantExpression.Value;
                             instanceOrType = fieldInfo.GetValue(obj);
                         }
                         else if (memberExpression.Member.MemberType == MemberTypes.Property)
                         {
-                            PropertyInfo propertyInfo = (memberExpression.Member as PropertyInfo);
+                            PropertyInfo propertyInfo = memberExpression.Member as PropertyInfo;
                             var obj = propertyInfo.GetMethod.IsStatic ? null : constantExpression.Value;
                             instanceOrType = propertyInfo.GetValue(obj);
                         }
