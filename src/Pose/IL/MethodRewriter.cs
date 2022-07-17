@@ -67,14 +67,16 @@ namespace Pose.IL
 
             foreach (var clause in methodBody.ExceptionHandlingClauses)
             {
-                ExceptionHandler handler = new ExceptionHandler();
-                handler.Flags = clause.Flags;
-                handler.CatchType = clause.Flags == ExceptionHandlingClauseOptions.Clause ? clause.CatchType : null;
-                handler.TryStart = clause.TryOffset;
-                handler.TryEnd = clause.TryOffset + clause.TryLength;
-                handler.FilterStart = clause.Flags == ExceptionHandlingClauseOptions.Filter ? clause.FilterOffset : -1;
-                handler.HandlerStart = clause.HandlerOffset;
-                handler.HandlerEnd = clause.HandlerOffset + clause.HandlerLength;
+                ExceptionHandler handler = new ExceptionHandler
+                {
+                    Flags = clause.Flags,
+                    CatchType = clause.Flags == ExceptionHandlingClauseOptions.Clause ? clause.CatchType : null,
+                    TryStart = clause.TryOffset,
+                    TryEnd = clause.TryOffset + clause.TryLength,
+                    FilterStart = clause.Flags == ExceptionHandlingClauseOptions.Filter ? clause.FilterOffset : -1,
+                    HandlerStart = clause.HandlerOffset,
+                    HandlerEnd = clause.HandlerOffset + clause.HandlerLength
+                };
                 handlers.Add(handler);
             }
 
@@ -86,7 +88,9 @@ namespace Pose.IL
                 .Select(i => (i.Operand as Instruction));
 
             foreach (Instruction instruction in ifTargets)
+            {
                 targetInstructions.TryAdd(instruction.Offset, ilGenerator.DefineLabel());
+            }
 
             var switchTargets = instructions
                 .Where(i => (i.Operand as Instruction[]) != null)
@@ -95,7 +99,9 @@ namespace Pose.IL
             foreach (Instruction[] _instructions in switchTargets)
             {
                 foreach (Instruction _instruction in _instructions)
+                {
                     targetInstructions.TryAdd(_instruction.Offset, ilGenerator.DefineLabel());
+                }
             }
 
 #if DEBUG
@@ -307,7 +313,7 @@ namespace Pose.IL
 
         private void EmitILForInlineVar(ILGenerator ilGenerator, Instruction instruction)
         {
-            int index = 0;
+            int index;
             if (instruction.OpCode.Name.Contains("loc"))
             {
                 index = ((LocalVariableInfo)instruction.Operand).LocalIndex;

@@ -28,6 +28,25 @@ namespace Pose.Tests
         }
 
         [TestMethod]
+        public void TestDateTimeNowStaticMethod()
+        {
+            TextWriter writer = Console.Out;
+            // Arrange
+            Shim dateTimeShim = Shim
+                .Replace(() => DateTime.Now)
+                .With(() => new DateTime(2004, 4, 4));
+
+            // Act
+            PoseContext.Isolate(() =>
+            {
+                Console.WriteLine(DateTime.Now);
+            }, dateTimeShim);
+
+            // Assert
+            Assert.AreEqual("04/04/2004 00:00:00", writer.ToString());
+        }
+
+        [TestMethod]
         public void TestPrivateStaticMethod()
         {
             // Arrange

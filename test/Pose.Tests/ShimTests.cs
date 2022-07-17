@@ -79,7 +79,6 @@ namespace Pose.Tests
         }        
         
         [TestMethod]
-        [Ignore]
         public void TestReplacePropertySetterAction()
         {
             var getterExecuted = false;
