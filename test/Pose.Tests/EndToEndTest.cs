@@ -47,7 +47,7 @@ namespace Pose.Tests
         }
 
         [TestMethod]
-        public void TestPrivateStaticMethod()
+        public void TestStaticMethod()
         {
             // Arrange
             Shim shim = Shim

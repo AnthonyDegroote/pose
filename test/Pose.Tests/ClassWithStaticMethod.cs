@@ -1,13 +1,13 @@
 ﻿namespace Pose.Tests
 {
-    internal class ClassWithStaticMethod
+    public class ClassWithStaticMethod
     {
-        internal bool ExposedMethod(string parameter)
+        public bool ExposedMethod(string parameter)
         {
             return StaticMethod(parameter);
         }
 
-        internal static bool StaticMethod(string parameter)
+        public static bool StaticMethod(string parameter)
         {
             return false;
         }
