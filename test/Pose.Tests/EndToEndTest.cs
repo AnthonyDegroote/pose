@@ -9,10 +9,28 @@ namespace Pose.Tests
     public class EndToEndTest
     {
         [TestMethod]
+        public void TestAssertConsole()
+        {
+            // Arrange
+            StringWriter writer = new StringWriter();
+            string expeted = $"Hello World{Environment.NewLine}";
+            Console.SetOut(writer);
+
+            // Act
+            Console.WriteLine("Hello World");
+
+            // Assert
+            Assert.AreEqual<string>(expeted, writer.ToString());
+        }
+
+        [TestMethod]
         public void TestConsoleStaticMethod()
         {
-            TextWriter writer = Console.Out;
             // Arrange
+            StringWriter writer = new StringWriter();
+            string expeted = $"Hijacked: Hello World{Environment.NewLine}";
+            Console.SetOut(writer);
+
             Shim consoleShim = Shim
                 .Replace(() => Console.WriteLine(Is.A<string>()))
                 .With(delegate (string s) { Console.WriteLine("Hijacked: {0}", s); });
@@ -24,14 +42,17 @@ namespace Pose.Tests
             }, consoleShim);
 
             // Assert
-            Assert.AreEqual("Hijacked: Hello World", writer.ToString());
+            Assert.AreEqual(expeted, writer.ToString());
         }
 
         [TestMethod]
         public void TestDateTimeNowStaticMethod()
         {
-            TextWriter writer = Console.Out;
             // Arrange
+            StringWriter writer = new StringWriter();
+            string expeted = $"04/04/2004 00:00:00{Environment.NewLine}";
+            Console.SetOut(writer);
+
             Shim dateTimeShim = Shim
                 .Replace(() => DateTime.Now)
                 .With(() => new DateTime(2004, 4, 4));
@@ -43,7 +64,7 @@ namespace Pose.Tests
             }, dateTimeShim);
 
             // Assert
-            Assert.AreEqual("04/04/2004 00:00:00", writer.ToString());
+            Assert.AreEqual(expeted, writer.ToString());
         }
 
         [TestMethod]
