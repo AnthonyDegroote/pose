@@ -68,7 +68,7 @@ namespace Pose.Tests
         }
 
         [TestMethod]
-        public void TestStaticMethod()
+        public void TestStaticMethodWithParameter()
         {
             // Arrange
             Shim shim = Shim
@@ -83,6 +83,28 @@ namespace Pose.Tests
             PoseContext.Isolate(() =>
             {
                 result = classTested.ExposedMethod("");
+            }, shim);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void TestStaticMethodWithoutParameter()
+        {
+            // Arrange
+            Shim shim = Shim
+                .Replace(() => ClassWithStaticMethod.StaticMethod())
+                .With(delegate () { return true; });
+
+            bool result = false;
+
+            ClassWithStaticMethod classTested = new ClassWithStaticMethod();
+
+            // Act
+            PoseContext.Isolate(() =>
+            {
+                result = classTested.ExposedMethod();
             }, shim);
 
             // Assert
