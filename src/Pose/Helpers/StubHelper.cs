@@ -29,14 +29,18 @@ namespace Pose.Helpers
         public static int GetIndexOfMatchingShim(MethodBase methodBase, Type type, object obj)
         {
             if (methodBase.IsStatic || obj == null)
+            {
                 return Array.FindIndex(PoseContext.Shims, s => s.Original == methodBase);
-
+            }
+                
             int index = Array.FindIndex(PoseContext.Shims,
                 s => Object.ReferenceEquals(obj, s.Instance) && s.Original == methodBase);
 
             if (index == -1)
+            {
                 return Array.FindIndex(PoseContext.Shims,
-                            s => SignatureEquals(s, type, methodBase) && s.Instance == null);
+                s => SignatureEquals(s, type, methodBase) && s.Instance == null);
+            }
 
             return index;
         }

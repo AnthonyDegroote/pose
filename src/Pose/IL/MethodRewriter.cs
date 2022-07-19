@@ -81,7 +81,9 @@ namespace Pose.IL
             }
 
             foreach (var local in locals)
+            {
                 ilGenerator.DeclareLocal(local.LocalType, local.IsPinned);
+            }
 
             var ifTargets = instructions
                 .Where(i => (i.Operand as Instruction) != null)
