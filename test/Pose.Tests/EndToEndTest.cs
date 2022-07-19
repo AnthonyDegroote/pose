@@ -20,7 +20,7 @@ namespace Pose.Tests
             Console.WriteLine("Hello World");
 
             // Assert
-            Assert.AreEqual<string>(expeted, writer.ToString());
+            Assert.AreEqual(expeted, writer.ToString());
         }
 
         [TestMethod]
