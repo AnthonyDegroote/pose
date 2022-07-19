@@ -11,5 +11,15 @@
         {
             return false;
         }
+
+        public bool ExposedMethod()
+        {
+            return StaticMethod();
+        }
+
+        public static bool StaticMethod()
+        {
+            return false;
+        }
     }
 }
